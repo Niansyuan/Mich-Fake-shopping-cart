@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { Drawer, LinearProgress, Grid, Badge } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Item from "./Item/Item";
+import Cart from "./cart/cart";
 //styles
 import { StyledButton, Wrapper } from "./App.styles";
 //types
@@ -13,7 +14,8 @@ export type CartItemType = {
   description: string,
   image: string,
   price: number,
-  title: string
+  title: string,
+  amount: number
 };
 
 const getProducts = async (): Promise<CartItemType[]> =>
@@ -29,8 +31,26 @@ const App = () => {
   );
   console.log(data);
   //set function
-  const getTotalItems = (items: CartItemType[]) => null;
-  const handleAddToCart = (clickType: CartItemType) => null; //clickType為參數，並設定其type為CartItemType
+  const getTotalItems = (items: CartItemType[]) =>
+    items.reduce((ack: number, item) => ack + item.amount, 0
+    );
+
+  //clickType為參數，並設定其type為CartItemType
+  const handleAddToCart = (clickedItem: CartItemType) => {
+    setCartItems((prevState) => {
+      //1. Is the item already added in the cart
+      const isItemInCart = prevState.find((item) => item.id === clickedItem.id)
+      if (isItemInCart) {
+        return prevState.map((item) => (
+          item.id === clickedItem.id ?
+            { ...item, amount: item.amount + 1 } : item
+        ))
+      };
+      //2.first time the item is add
+      return [...prevState, { ...clickedItem, amount: 1 }]
+    });
+  };
+
   const handleRemoveFromCart = () => null;
 
   //<LinearProgress /> 顯示進度條
@@ -45,12 +65,19 @@ const App = () => {
     <Wrapper>
       {/* sideBar for cartItems */}
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
-        cartItemsList
+        <Cart
+          cartItems={cartItems}
+          addToCart={handleAddToCart}
+          removeFromCart={handleRemoveFromCart}
+        />
       </Drawer>
       {/* button for open cart */}
       <StyledButton onClick={() => setCartOpen(true)}>
-        <Badge badgeContent={getTotalItems(cartItems)} color="error">
-          <AddShoppingCartIcon />
+        <Badge
+          badgeContent={getTotalItems(cartItems)}
+          color="error"
+        >
+          <AddShoppingCartIcon fontSize="large" />
         </Badge>
       </StyledButton>
       {/* grid for each item */}
@@ -60,7 +87,7 @@ const App = () => {
             item
             key={item.id}
             xs={12}
-            sm={4}
+            sm={3}
           >
             <Item item={item} handleAddToCart={handleAddToCart} />
           </Grid>

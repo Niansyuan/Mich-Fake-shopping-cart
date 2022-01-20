@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 //types
 import { CartItemType } from "../App";
 //styles
-import { Wrapper } from "./Item.style";
+import { Wrapper } from "./Item.styles";
 
 type Props = {
     item: CartItemType,
