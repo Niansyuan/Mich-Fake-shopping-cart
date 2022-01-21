@@ -1,20 +1,32 @@
+import DeleteOutline from "@mui/icons-material/DeleteOutline";
 import { Button } from "@mui/material";
-import { fchmod } from "fs";
 //types
 import { CartItemType } from "../App";
 //styles
 import { Wrapper } from "../cartItem/cartItem.styles";
+//component
+import AlertDialog from "../dialog/dialog";
 
 type Props = {
     item: CartItemType;
     addToCart: (clickedItem: CartItemType) => void;
     removeFromCart: (id: number) => void;
+    removeOnce: (id: number) => void;
 };
 
-const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => (
+const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart, removeOnce }) => (
     <Wrapper>
         <div>
-            <h3>{item.title}</h3>
+            <div className="deletButton">
+                <AlertDialog item={item} removeOnce={removeOnce} />
+                {/* <button
+                    className="deletButton--style"
+                    // onClick={() => removeOnce(item.id)}
+                >
+                    <DeleteOutline />
+                </button> */}
+                <h3>{item.title}</h3>
+            </div>
             <div className="ItemInfo">
                 <p>Price: $ {item.price}</p>
                 <p>Total: $ {(item.amount * item.price).toFixed(2)}</p>

@@ -30,13 +30,13 @@ const App = () => {
     getProducts
   );
   console.log(data);
-  //set function
+
+  //-----------------set functions------------------
   const getTotalItems = (items: CartItemType[]) => {
     return items.reduce((ack: number, item) => ack + item.amount, 0); //reduce(action, initialValue)
   };
 
-
-  //clickType為參數，並設定其type為CartItemType
+  //(解釋)clickedItem為參數，並設定其type為CartItemType
   const handleAddToCart = (clickedItem: CartItemType) => {
     setCartItems((prevState) => {
       //1. Is the item already added in the cart
@@ -67,7 +67,19 @@ const App = () => {
     })
   };
 
-  //<LinearProgress /> 顯示進度條
+  const handleRemoveOnce = (id: number) => {
+    setCartItems((prevState) => {
+      return prevState.reduce((ack, item) => {
+        if (item.id === id) {
+          return [...ack]
+        } else {
+          return [...ack, item]
+        };
+      }, [] as CartItemType[]);
+    });
+  };
+
+  //----------<LinearProgress /> 顯示進度條---------------------
   if (isLoading) {
     return <LinearProgress />
   };
@@ -83,6 +95,7 @@ const App = () => {
           cartItems={cartItems}
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
+          removeOnce={handleRemoveOnce}
         />
       </Drawer>
       {/* button for open cart */}

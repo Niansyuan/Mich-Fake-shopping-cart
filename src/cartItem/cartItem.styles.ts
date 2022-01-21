@@ -18,4 +18,20 @@ export const Wrapper = styled.div`
         object-fit: cover;
         margin: 40px 0 0 40px;
     };
+    .deletButton {
+        display: flex;
+        flex-direction: row;
+        align-items:center;
+        justify-content: space-between;
+    };
+    .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.css-i4bv87-MuiSvgIcon-root {
+        padding:10px;
+        color:grey;
+        border-radius: 50%;
+    };
+    .deletButton--style {
+        border:none;
+        background: none;
+        padding:0;
+    };
 `;
