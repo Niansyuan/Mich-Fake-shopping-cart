@@ -31,9 +31,10 @@ const App = () => {
   );
   console.log(data);
   //set function
-  const getTotalItems = (items: CartItemType[]) =>
-    items.reduce((ack: number, item) => ack + item.amount, 0
-    );
+  const getTotalItems = (items: CartItemType[]) => {
+    return items.reduce((ack: number, item) => ack + item.amount, 0); //reduce(action, initialValue)
+  };
+
 
   //clickType為參數，並設定其type為CartItemType
   const handleAddToCart = (clickedItem: CartItemType) => {
@@ -51,7 +52,20 @@ const App = () => {
     });
   };
 
-  const handleRemoveFromCart = () => null;
+  const handleRemoveFromCart = (id: number) => {
+    setCartItems((prevState) => {
+      return prevState.reduce((ack, item) => { //ack是accumulator，用來累積回呼函式回傳值的累加器，回傳上一次呼叫後的累加數值。
+        if (item.id === id) {
+          if (item.amount === 1) {
+            return ack
+          };
+          return [...ack, { ...item, amount: item.amount - 1 }]
+        } else {
+          return [...ack, item]
+        };
+      }, [] as CartItemType[])
+    })
+  };
 
   //<LinearProgress /> 顯示進度條
   if (isLoading) {
