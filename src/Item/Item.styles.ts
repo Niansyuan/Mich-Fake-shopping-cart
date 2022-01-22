@@ -6,13 +6,23 @@ export const Wrapper = styled.div`
     flex-direction:column;
     width:100%;
     height: 100%;
-    border: 1px solid gray;
+    border: none;
     border-radius:10px;
     word-wrap:break-word;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     button {
         border-radius: 0 0  10px 10px;
     };
+    .more {
+        color: #1976d2;
+        border:none;
+        background:none;
+        :hover {
+            color:#97b1ca;
+        };
+    };
     img {
+        margin: 50px;
         max-height: 250px;
         border-radius: 10px 10px 0 0;
         object-fit: cover;

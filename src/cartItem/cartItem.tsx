@@ -19,12 +19,6 @@ const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart, removeOnce
         <div>
             <div className="deletButton">
                 <AlertDialog item={item} removeOnce={removeOnce} />
-                {/* <button
-                    className="deletButton--style"
-                    // onClick={() => removeOnce(item.id)}
-                >
-                    <DeleteOutline />
-                </button> */}
                 <h3>{item.title}</h3>
             </div>
             <div className="ItemInfo">
