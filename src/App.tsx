@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 //components
-import { Drawer, LinearProgress, Grid, Badge } from "@mui/material";
+import { Drawer, LinearProgress, Grid, Badge, ThemeProvider } from "@mui/material";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Item from "./Item/Item";
 import Cart from "./cart/cart";
-
+import { theme } from "./theme";
 //styles
 import { StyledButton, Wrapper } from "./App.styles";
 import Header from "./Header/Header";
@@ -92,39 +92,41 @@ const App = () => {
   return (
     <div>
       <Header />
-      <Wrapper>
-        {/* sideBar for cartItems */}
-        <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
-          <Cart
-            cartItems={cartItems}
-            addToCart={handleAddToCart}
-            removeFromCart={handleRemoveFromCart}
-            removeOnce={handleRemoveOnce}
-          />
-        </Drawer>
-        {/* button for open cart */}
-        <StyledButton onClick={() => setCartOpen(true)}>
-          <Badge
-            badgeContent={getTotalItems(cartItems)}
-            color="error"
-          >
-            <AddShoppingCartIcon fontSize="large" />
-          </Badge>
-        </StyledButton>
-        {/* grid for each item */}
-        <Grid container spacing={3}>
-          {data?.map((item) => (
-            <Grid
-              item
-              key={item.id}
-              xs={12}
-              sm={3}
+      <ThemeProvider theme={theme}>
+        <Wrapper>
+          {/* sideBar for cartItems */}
+          <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
+            <Cart
+              cartItems={cartItems}
+              addToCart={handleAddToCart}
+              removeFromCart={handleRemoveFromCart}
+              removeOnce={handleRemoveOnce}
+            />
+          </Drawer>
+          {/* button for open cart */}
+          <StyledButton onClick={() => setCartOpen(true)}>
+            <Badge
+              badgeContent={getTotalItems(cartItems)}
+              color="error"
             >
-              <Item item={item} handleAddToCart={handleAddToCart} />
-            </Grid>
-          ))}
-        </Grid>
-      </Wrapper>
+              <AddShoppingCartIcon fontSize="large" />
+            </Badge>
+          </StyledButton>
+          {/* grid for each item */}
+          <Grid container spacing={3}>
+            {data?.map((item) => (
+              <Grid
+                item
+                key={item.id}
+                xs={12}
+                sm={3}
+              >
+                <Item item={item} handleAddToCart={handleAddToCart} />
+              </Grid>
+            ))}
+          </Grid>
+        </Wrapper>
+      </ThemeProvider>
     </div>
   );
 };

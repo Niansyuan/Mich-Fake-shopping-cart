@@ -14,11 +14,11 @@ export const Wrapper = styled.div`
         border-radius: 0 0  10px 10px;
     };
     .more {
-        color: #1976d2;
+        color: #b5643f;
         border:none;
         background:none;
         :hover {
-            color:#97b1ca;
+            color:#e89975;
         };
     };
     img {
